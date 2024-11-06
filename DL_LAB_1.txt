@@ -1,0 +1,115 @@
+==> TENSORFLOW
+
+!pip install tensorflow
+
+# import
+import tensorflow as tf
+import numpy as np
+
+a = tf.constant(15)
+b = tf.constant(20)
+print(a+b)
+
+# input
+x = np.random.rand(100).astype(np.float32)
+print(x)
+
+# output - observed
+y = x * 0.2 + 0.2
+print(y)
+
+# Weight
+W = tf.Variable(tf.random.normal([1]))
+W
+
+# bias
+b = tf.Variable(tf.zeros([1]))
+b
+
+# Create a function for MSE - mean squared error
+def mse_loss():
+ ypred = W * x + b
+ loss = tf.reduce_mean(tf.square(ypred-y))
+ return loss
+
+# Optimizer
+optimizer = tf.keras.optimizers.Adam()
+print(optimizer)
+optimizer
+
+# Iterations
+for step in range(5000):
+ with tf.GradientTape() as tape:
+  loss = mse_loss() # Compute the loss
+ gradients = tape.gradient(loss, [W, b]) # Compute gradients of loss with respect to variables
+
+ optimizer.apply_gradients(zip(gradients, [W, b])) # Apply the gradients to update variables
+ 
+ if step % 500 == 0:
+  print(step, W.numpy(), b.numpy())
+
+
+==> PYTORCH
+
+import torch
+import numpy as np
+
+#Step 1- using data
+data = [
+[1,2],
+[3,4]
+]
+x_data = torch.tensor(data)
+print(type(x_data))
+
+### 2 - using numpy array
+np_array = np.array(data)
+x_np = torch.from_numpy(np_array)
+print(x_np)
+print(type(x_np))
+
+### 3 - using another tensor
+x_ones = torch.ones_like(x_data)
+print("One Tensor: \n",x_ones)
+x_rand = torch.rand_like(x_data,dtype=torch.float)
+print(x_rand)
+
+ #### more ways to create tensors
+shape = (2,3)
+random_tensor = torch.rand(shape) print(random_tensor)
+print(type(random_tensor))
+
+ones_tensor = torch.ones(shape)
+print(ones_tensor)
+print(type(ones_tensor))
+
+zeros_tensor = torch.zeros(shape)
+print(zeros_tensor)
+print(type(zeros_tensor))
+
+tensor = torch.rand(3,4)
+print(tensor)
+print(tensor.shape)
+print(tensor.dtype)
+print(tensor.device)
+
+# Tensor Operations
+if torch.cuda.is_available():
+ tensor = tensor.to('cuda')
+print("Device tensor is stored in ", tensor.device)
+
+
+# Indexing, Slicing
+tensor = torch.ones(4,4)
+print(tensor)
+print(tensor)
+tensor1 = torch.zeros(4,4)
+print(tensor1)
+tensor2 = torch.cat([tensor,tensor1])
+print(tensor2)
+
+==> KERAS
+
+pdf
+
+
